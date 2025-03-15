@@ -5,9 +5,11 @@
     "build": "turbo build",
     "dev": "pnpm supabase start && turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "cz": "git-cz"
   },
   "devDependencies": {
+    "git-cz": "^4.9.0",
     "prettier": "^3.2.5",
     "supabase": "^2.19.7",
     "turbo": "^2.3.3",
