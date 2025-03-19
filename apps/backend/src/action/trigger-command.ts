@@ -32,8 +32,6 @@ export const triggerCommand = async (formData: FormData) => {
   const BASE_URL = 'https://www.quantconnect.com/api/v2'
   const headers = createHeaders()
 
-  console.log(formData)
-
   const { data, error } = await formDataSchema.safeParse(Object.fromEntries(formData))
 
   if (error) {
