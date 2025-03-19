@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
+  "exports": {
+    "./base": "./base.json",
+    "./react": "./react-library.json",
+    "./next": "./nextjs.json"
   }
 }

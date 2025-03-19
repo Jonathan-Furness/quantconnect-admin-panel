@@ -6,7 +6,8 @@
     "dev": "pnpm supabase start && turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "cz": "git-cz"
+    "cz": "git-cz",
+    "generate:importmap": "NODE_ENV=development pnpm --filter backend generate:importmap"
   },
   "devDependencies": {
     "git-cz": "^4.9.0",

@@ -1,25 +1,25 @@
 {
   "name": "@repo/env",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
   "private": true,
   "type": "module",
   "dependencies": {
-    "@t3-oss/env-core": "^0.12.0",
-    "@t3-oss/env-nextjs": "^0.11.1",
     "zod": "^3.23.8"
   },
-  "devDependencies": {
-    "@types/node": "^22.10.10"
+  "peerDependencies": {
+    "@t3-oss/env-core": "^0.12.0",
+    "@t3-oss/env-nextjs": "^0.12.0"
   },
-  "exports": {
-    ".": "./src/index.ts"
-  }
+  "devDependencies": {
+    "@t3-oss/env-core": "^0.12.0",
+    "@t3-oss/env-nextjs": "^0.12.0",
+    "@types/node": "^22.10.10",
+    "typescript": "^5.8.2"
+  },
+  "files": [
+    "src/index.ts"
+  ]
 }

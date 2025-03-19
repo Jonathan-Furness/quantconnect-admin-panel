@@ -5,7 +5,8 @@ import { z } from 'zod'
 export const env = createEnv({
   server: {
     NODE_ENV: z.string(),
+    PORT: z.coerce.number().default(3000),
   },
-  runtimeEnv: process.env,
-  extends: [supabaseEnv(), payloadEnv(), quantconnectEnv()],
+  experimental__runtimeEnv: process.env,
+  extends: [supabaseEnv(), payloadEnv(), quantconnectEnv(), vercelEnv()],
 })

@@ -10,5 +10,5 @@ export const supabaseEnv = () =>
       DB_PORT: z.coerce.number().default(5432),
       DB_NAME: z.string().default("postgres"),
     },
-    runtimeEnv: process.env as Record<string, string>,
+    experimental__runtimeEnv: process.env,
   });

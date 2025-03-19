@@ -7,5 +7,5 @@ export const quantconnectEnv = () =>
       QC_API_TOKEN: z.string().min(1),
       QC_USER_ID: z.string().min(1),
     },
-    runtimeEnv: process.env as Record<string, string>,
+    experimental__runtimeEnv: process.env,
   });
