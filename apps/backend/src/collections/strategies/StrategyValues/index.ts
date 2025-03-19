@@ -5,6 +5,7 @@ export const StrategyValues: CollectionConfig = {
   admin: {
     group: 'Strategies',
     defaultColumns: ['date', 'strategy', 'value'],
+    hidden: true,
   },
   fields: [
     {
@@ -18,17 +19,22 @@ export const StrategyValues: CollectionConfig = {
       required: true,
       hooks: {
         beforeChange: [
-          async ({ data, req: { user } }) => {
+          async ({ data }) => {
             // Store values as integers to avoid precision issues
             return data ? Math.round(data.value * 100) : null
           },
         ],
         afterRead: [
-          async ({ data, req: { user } }) => {
+          async ({ data }) => {
             // Convert back to float for display
             return data ? data.value / 100 : null
           },
         ],
+      },
+      admin: {
+        components: {
+          Cell: './collections/strategies/StrategyValues/components/value-cell.tsx',
+        },
       },
     },
     {

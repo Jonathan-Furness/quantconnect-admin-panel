@@ -5,7 +5,8 @@ export const Commands: CollectionConfig = {
   admin: {
     group: 'Strategies',
     useAsTitle: 'name',
-    defaultColumns: ['name', 'description', 'open'],
+    defaultColumns: ['name', 'description', 'action-button'],
+    hidden: true,
   },
   fields: [
     {
@@ -33,6 +34,7 @@ export const Commands: CollectionConfig = {
     {
       name: 'schema',
       type: 'array',
+      maxRows: 1,
       fields: [
         {
           type: 'row',
@@ -73,12 +75,10 @@ export const Commands: CollectionConfig = {
     },
     {
       type: 'ui',
-      name: 'open',
+      name: 'action-button',
       admin: {
         components: {
-          Cell: {
-            path: './components/test',
-          },
+          Cell: './collections/strategies/Command/components/action-button.tsx',
         },
       },
     },

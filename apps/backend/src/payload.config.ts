@@ -12,13 +12,14 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Strategies } from '@/collections/strategies/Strategies'
 import { StrategyValues } from './collections/strategies/StrategyValues'
-import { Commands } from './collections/strategies/Commands'
+import { Commands } from './collections/strategies/Command'
+import { getServerUrl } from './utils/vercel-utils'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  // serverURL: process.env.PAYLOAD_SERVER_URL || 'http://localhost:3000',
+  serverURL: getServerUrl(),
   routes: {
     admin: '/',
   },
@@ -26,6 +27,14 @@ export default buildConfig({
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    components: {
+      header: [
+        {
+          path: './components/modals/command-modal.tsx',
+          exportName: 'CommandModal',
+        },
+      ],
     },
     ...(env.NODE_ENV === 'development' && {
       autoLogin: {

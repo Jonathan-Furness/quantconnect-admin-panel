@@ -17,6 +17,9 @@ export const Strategies: CollectionConfig = {
           label: 'Name',
           type: 'text',
           required: true,
+          admin: {
+            width: '50%',
+          },
         },
         {
           name: 'project_id',
@@ -24,6 +27,7 @@ export const Strategies: CollectionConfig = {
           type: 'text',
           required: true,
           admin: {
+            width: '50%',
             description: 'This is the Project ID for the strategy in QuantConnect.',
             components: {
               // TODO: Add a component to check strategy is running
@@ -41,6 +45,9 @@ export const Strategies: CollectionConfig = {
           type: 'date',
           defaultValue: new Date(),
           required: true,
+          admin: {
+            width: '50%',
+          },
         },
         {
           name: 'base_currency',
@@ -48,6 +55,9 @@ export const Strategies: CollectionConfig = {
           type: 'select',
           required: true,
           defaultValue: 'USD',
+          admin: {
+            width: '50%',
+          },
           options: [
             {
               label: 'USD',
