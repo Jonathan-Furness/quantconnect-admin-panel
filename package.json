@@ -1,6 +1,6 @@
 {
   "name": "quantconnect-admin-panel",
-  "private": true,
+  "author": "Jonathan-Furness <jlsfurness@gmail.com>",
   "scripts": {
     "build": "turbo build",
     "dev": "pnpm supabase start && turbo dev",

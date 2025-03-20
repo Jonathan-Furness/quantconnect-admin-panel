@@ -34,7 +34,7 @@ export const Commands: CollectionConfig = {
     {
       name: 'schema',
       type: 'array',
-      maxRows: 1,
+      minRows: 1,
       fields: [
         {
           type: 'row',
