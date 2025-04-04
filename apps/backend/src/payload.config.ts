@@ -1,7 +1,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
-import { buildConfig } from 'payload'
+import { buildConfig, type PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
@@ -11,9 +11,13 @@ import { env as clientEnv } from '@/env/client'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Strategies } from '@/collections/strategies/Strategies'
-import { StrategyValues } from './collections/strategies/StrategyValues'
 import { Commands } from './collections/strategies/Command'
 import { getServerUrl } from './utils/vercel-utils'
+import { StrategyValues } from './collections/strategies/StrategyValues'
+import { StorageMethods } from './collections/strategies/StorageMethods'
+
+import { queueAccountValueTasks } from './job-queue/tasks/queue-account-value-tasks'
+import { storeStrategyValues } from './job-queue/tasks/store-strategy-values'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -34,6 +38,10 @@ export default buildConfig({
           path: './components/modals/command-modal.tsx',
           exportName: 'CommandModal',
         },
+        {
+          path: './components/test.tsx',
+          exportName: 'RunJobTest',
+        },
       ],
     },
     ...(env.NODE_ENV === 'development' && {
@@ -43,7 +51,7 @@ export default buildConfig({
       },
     }),
   },
-  collections: [Strategies, StrategyValues, Commands, Users, Media],
+  collections: [Strategies, StrategyValues, StorageMethods, Commands, Users, Media],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET || '',
   typescript: {
@@ -58,8 +66,16 @@ export default buildConfig({
       port: env.DB_PORT,
     },
   }),
+  jobs: {
+    tasks: [queueAccountValueTasks, storeStrategyValues],
+    workflows: [],
+    access: {
+      run: ({ req }: { req: PayloadRequest }): boolean => {
+        if (req.user) return true
+        const authHeader = req.headers.get('authorization')
+        return authHeader === `Bearer ${env.CRON_SECRET}`
+      },
+    },
+  },
   sharp,
-  plugins: [
-    // storage-adapter-placeholder
-  ],
 })

@@ -1,39 +1,55 @@
 import type { CollectionConfig } from 'payload'
+import { storeEndpoint } from './endpoints/store'
+import { convertCentsToDollars, convertDollarsToCents } from './hooks/precision-hooks'
 
 export const StrategyValues: CollectionConfig = {
   slug: 'strategy-values',
   admin: {
     group: 'Strategies',
-    defaultColumns: ['date', 'strategy', 'value'],
-    hidden: true,
+    defaultColumns: ['date', 'value', 'net_cash_movement'],
   },
+  endpoints: [storeEndpoint],
   fields: [
     {
+      label: 'Date',
       name: 'date',
       type: 'date',
       required: true,
     },
     {
+      label: 'Value',
       name: 'value',
       type: 'number',
       required: true,
+      defaultValue: 0,
       hooks: {
-        beforeChange: [
-          async ({ data }) => {
-            // Store values as integers to avoid precision issues
-            return data ? Math.round(data.value * 100) : null
-          },
-        ],
-        afterRead: [
-          async ({ data }) => {
-            // Convert back to float for display
-            return data ? data.value / 100 : null
-          },
-        ],
+        beforeChange: [convertDollarsToCents],
+        afterRead: [convertCentsToDollars],
       },
       admin: {
         components: {
-          Cell: './collections/strategies/StrategyValues/components/value-cell.tsx',
+          Cell: {
+            path: './collections/strategies/StrategyValues/components/value-cell',
+            exportName: 'ValueCell',
+          },
+        },
+      },
+    },
+    {
+      label: 'Net Cash Movement',
+      name: 'net_cash_movement',
+      type: 'number',
+      defaultValue: 0,
+      hooks: {
+        beforeChange: [convertDollarsToCents],
+        afterRead: [convertCentsToDollars],
+      },
+      admin: {
+        components: {
+          Cell: {
+            path: './collections/strategies/StrategyValues/components/value-cell',
+            exportName: 'ValueCell',
+          },
         },
       },
     },
