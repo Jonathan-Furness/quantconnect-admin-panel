@@ -47,7 +47,7 @@ export const storeStrategyValues: TaskConfig<'store-strategy-values'> = {
           await storeInteractiveBrokersAccountValues({
             payload,
             strategy_id,
-            flex_query_id: method_options?.flex_query_id as string,
+            flex_query_id: method_options.flex_query_id,
           })
           return { output: {} }
         default:
