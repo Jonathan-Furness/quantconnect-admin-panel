@@ -1,7 +1,6 @@
 import { createCipheriv, randomBytes, createHash } from "node:crypto";
 import { encryptionEnv } from "@repo/env";
 import type { EncryptedData } from "@/types";
-import { create } from "node:domain";
 
 export const encryptValue = (value?: string): EncryptedData => {
   if (!value) {
@@ -13,7 +12,6 @@ export const encryptValue = (value?: string): EncryptedData => {
     .digest();
 
   const iv = randomBytes(16);
-
   const cipher = createCipheriv("aes-256-gcm", MASTER_KEY, iv);
 
   let encrypted = cipher.update(value, "utf8", "hex");

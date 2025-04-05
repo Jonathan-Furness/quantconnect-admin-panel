@@ -1,5 +1,12 @@
 import { createEnv } from '@t3-oss/env-nextjs'
-import { supabaseEnv, vercelEnv, payloadEnv, quantconnectEnv, encryptionEnv } from '@repo/env'
+import {
+  supabaseEnv,
+  vercelEnv,
+  payloadEnv,
+  quantconnectEnv,
+  encryptionEnv,
+  brokers,
+} from '@repo/env'
 import { z } from 'zod'
 
 export const env = createEnv({
@@ -9,5 +16,12 @@ export const env = createEnv({
     CRON_SECRET: z.string(),
   },
   experimental__runtimeEnv: process.env,
-  extends: [supabaseEnv(), payloadEnv(), quantconnectEnv(), vercelEnv(), encryptionEnv()],
+  extends: [
+    supabaseEnv(),
+    payloadEnv(),
+    quantconnectEnv(),
+    vercelEnv(),
+    encryptionEnv(),
+    brokers.interactiveBrokersEnv(),
+  ],
 })

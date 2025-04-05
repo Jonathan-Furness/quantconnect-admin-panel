@@ -648,7 +648,7 @@ export interface TaskQueueAccountValueTasks {
 export interface TaskStoreStrategyValues {
   input: {
     storage_method: string;
-    strategy_id: string;
+    strategy_id: number;
     method_options:
       | {
           [k: string]: unknown;

@@ -13,7 +13,9 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "prepare": "panda codegen"
+    "prepare": "panda codegen",
+    "test": "vitest",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "latest",
@@ -26,6 +28,7 @@
     "@repo/strategy-values": "workspace:^",
     "@t3-oss/env-nextjs": "^0.12.0",
     "cross-env": "^7.0.3",
+    "fast-xml-parser": "^5.2.0",
     "graphql": "^16.8.1",
     "jiti": "^2.4.2",
     "next": "15.2.2",
@@ -46,9 +49,12 @@
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/ui": "3.1.1",
+    "dotenv": "^16.4.7",
     "eslint": "^9.16.0",
     "eslint-config-next": "15.2.2",
     "jsdom": "^26.0.0",
+    "msw": "^2.7.3",
     "prettier": "^3.4.2",
     "typescript": "5.8.2",
     "vite-tsconfig-paths": "^5.1.4",

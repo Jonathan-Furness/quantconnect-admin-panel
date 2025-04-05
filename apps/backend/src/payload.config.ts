@@ -16,8 +16,8 @@ import { getServerUrl } from './utils/vercel-utils'
 import { StrategyValues } from './collections/strategies/StrategyValues'
 import { StorageMethods } from './collections/strategies/StorageMethods'
 
-import { queueAccountValueTasks } from './job-queue/tasks/queue-account-value-tasks'
-import { storeStrategyValues } from './job-queue/tasks/store-strategy-values'
+import { queueAccountValueTasks } from './job-queue/tasks/strategy-values/queue-account-value-tasks'
+import { storeStrategyValues } from './job-queue/tasks/strategy-values/store-strategy-values'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -37,10 +37,6 @@ export default buildConfig({
         {
           path: './components/modals/command-modal.tsx',
           exportName: 'CommandModal',
-        },
-        {
-          path: './components/test.tsx',
-          exportName: 'RunJobTest',
         },
       ],
     },
@@ -69,6 +65,18 @@ export default buildConfig({
   jobs: {
     tasks: [queueAccountValueTasks, storeStrategyValues],
     workflows: [],
+    jobsCollectionOverrides: ({ defaultJobsCollection }) => {
+      return {
+        ...defaultJobsCollection,
+        admin: {
+          ...defaultJobsCollection.admin,
+          components: {
+            listMenuItems: [],
+          },
+          hidden: false,
+        },
+      }
+    },
     access: {
       run: ({ req }: { req: PayloadRequest }): boolean => {
         if (req.user) return true
