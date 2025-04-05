@@ -1,5 +1,3 @@
-import { State } from 'node_modules/@payloadcms/ui/dist/elements/WhereBuilder/types'
-
 type ReferenceCodeSuccessReponse = {
   Status: 'Success'
   ReferenceCode: string
