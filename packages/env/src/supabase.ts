@@ -7,8 +7,9 @@ export const supabaseEnv = () =>
       DB_USER: z.string().default("postgres"),
       DB_PASSWORD: z.string(),
       DB_HOST: z.string(),
-      DB_PORT: z.coerce.number().default(5432),
+      DB_PORT: z.coerce.number().default(54322),
       DB_NAME: z.string().default("postgres"),
     },
     experimental__runtimeEnv: process.env,
+    skipValidation: true,
   });
