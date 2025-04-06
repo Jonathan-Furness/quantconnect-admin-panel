@@ -8,4 +8,5 @@ export const quantconnectEnv = () =>
       QC_USER_ID: z.string().min(1),
     },
     experimental__runtimeEnv: process.env,
+    skipValidation: process.env.NODE_ENV === "test",
   });

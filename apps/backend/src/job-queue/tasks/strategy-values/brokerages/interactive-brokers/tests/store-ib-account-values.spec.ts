@@ -80,7 +80,7 @@ describe('storeInteractiveBrokersAccountValues', () => {
       collection: 'strategy-values',
       where: {
         strategy: { equals: 5 },
-        date: { equals: expect.any(Date) },
+        date: { equals: expect.any(String) },
       },
     })
 
@@ -89,7 +89,7 @@ describe('storeInteractiveBrokersAccountValues', () => {
       collection: 'strategy-values',
       data: {
         strategy: 5,
-        date: expect.any(Date),
+        date: expect.any(String),
         value: 10000.5,
         net_cash_movement: 701, // 500 + 201 from the XML
       },
@@ -97,9 +97,9 @@ describe('storeInteractiveBrokersAccountValues', () => {
 
     // Verify the date parsed correctly
     const createdData = (mockPayload.create as any).mock.calls[0][0].data
-    expect(createdData.date.getFullYear()).toBe(2023)
-    expect(createdData.date.getMonth()).toBe(5) // June is 5 (zero-indexed)
-    expect(createdData.date.getDate()).toBe(15)
+    expect(parseInt(createdData.date.substring(0, 4), 10)).toBe(2023)
+    expect(parseInt(createdData.date.substring(5, 7), 10)).toBe(6)
+    expect(parseInt(createdData.date.substring(8, 10), 10)).toBe(15)
   })
 
   it('should throw error when value for that date already exists', async () => {

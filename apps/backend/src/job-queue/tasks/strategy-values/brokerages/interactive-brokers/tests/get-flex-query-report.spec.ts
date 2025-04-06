@@ -31,7 +31,7 @@ describe('getInteractiveBrokersFlexQueryReport', () => {
 
     expect(result.net_liquidation_value).toBe(10000.5)
     expect(result.net_cash_movement).toBe(701) // 500.25 + 200.75
-    expect(result.date).toEqual(new Date(2023, 5, 15)) // June 15, 2023
+    expect(result.date).toEqual('2023-06-15') // June 15, 2023
   })
 
   it('should handle missing values with defaults', async () => {
@@ -53,6 +53,6 @@ describe('getInteractiveBrokersFlexQueryReport', () => {
 
     expect(result.net_liquidation_value).toBe(0)
     expect(result.net_cash_movement).toBe(0)
-    expect(result.date).toEqual(new Date(2023, 5, 15))
+    expect(result.date).toEqual('2023-06-15')
   })
 })

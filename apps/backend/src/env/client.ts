@@ -10,4 +10,5 @@ export const env = createEnv({
     NEXT_PUBLIC_DEV_EMAIL: process.env.NEXT_PUBLIC_DEV_EMAIL,
     NEXT_PUBLIC_DEV_PASSWORD: process.env.NEXT_PUBLIC_DEV_PASSWORD,
   },
+  skipValidation: process.env.NODE_ENV === 'test',
 })

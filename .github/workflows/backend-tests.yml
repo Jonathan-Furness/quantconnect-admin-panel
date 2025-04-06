@@ -12,6 +12,10 @@ on:
       - "quantconnect-admin-panel/apps/backend/**"
       - ".github/workflows/backend-tests.yml"
 
+env:
+  NODE_ENV: test
+  PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -51,14 +55,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Generate types
-        run: pnpm --filter backend generate:types
-
       - name: Run Panda CSS codegen
         run: pnpm --filter backend prepare
 
       - name: Run tests
         run: pnpm --filter backend test
-        env:
-          # Add any environment variables needed for testing
-          NODE_ENV: test

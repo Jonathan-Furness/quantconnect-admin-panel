@@ -7,6 +7,7 @@ const interactiveBrokersEnv = () =>
       IB_API_KEY: z.string(),
     },
     experimental__runtimeEnv: process.env,
+    skipValidation: process.env.NODE_ENV === "test",
   });
 
 export default {

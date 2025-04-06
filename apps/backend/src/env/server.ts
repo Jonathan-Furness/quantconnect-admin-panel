@@ -16,6 +16,7 @@ export const env = createEnv({
     CRON_SECRET: z.string(),
   },
   experimental__runtimeEnv: process.env,
+  skipValidation: process.env.NODE_ENV === 'test',
   extends: [
     supabaseEnv(),
     payloadEnv(),

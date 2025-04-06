@@ -11,5 +11,5 @@ export const supabaseEnv = () =>
       DB_NAME: z.string().default("postgres"),
     },
     experimental__runtimeEnv: process.env,
-    skipValidation: true,
+    skipValidation: process.env.NODE_ENV === "test",
   });
