@@ -11,7 +11,7 @@ export const queueAccountValueTasks: TaskConfig<'queue-account-value-tasks'> = {
     },
   ],
   retries: {
-    shouldRestore: true,
+    shouldRestore: false,
   },
   handler: async ({ input, req }) => {
     const { frequency } = input
@@ -37,6 +37,18 @@ export const queueAccountValueTasks: TaskConfig<'queue-account-value-tasks'> = {
       }
     }
 
+    const existingQueue = await payload.find({
+      collection: 'payload-jobs',
+      where: {
+        queue: {
+          equals: frequency,
+        },
+        taskSlug: {
+          equals: 'store-strategy-values',
+        },
+      },
+    })
+
     for (let i = 0; i < storageOptions.docs.length; i++) {
       const doc = storageOptions.docs[i]
       const methods = doc?.methods || []
@@ -48,6 +60,18 @@ export const queueAccountValueTasks: TaskConfig<'queue-account-value-tasks'> = {
           storage_method: method?.blockType as any,
           strategy_id: (doc?.strategy as Strategy)?.id as any,
           method_options: method as any,
+          frequency,
+        }
+
+        if (
+          existingQueue.docs.some(
+            (job) =>
+              job.input &&
+              (job.input as any)?.strategy_id === input.strategy_id &&
+              (job.input as any)?.storage_method === input.storage_method,
+          )
+        ) {
+          continue
         }
 
         await payload.jobs.queue({

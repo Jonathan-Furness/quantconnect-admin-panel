@@ -7,6 +7,7 @@ const InputSchema = z.object({
   storage_method: z.string().min(1),
   strategy_id: z.number().min(1),
   method_options: IBMethodOptionsSchema,
+  frequency: z.string().min(1),
 })
 
 export const storeStrategyValues: TaskConfig<'store-strategy-values'> = {
@@ -27,19 +28,24 @@ export const storeStrategyValues: TaskConfig<'store-strategy-values'> = {
       type: 'json',
       required: true,
     },
+    {
+      name: 'frequency',
+      type: 'text',
+      required: true,
+    },
   ],
   retries: {
     shouldRestore: true,
   },
   handler: async ({ input, req }) => {
     const payload = req.payload
+    const { data, error } = InputSchema.safeParse(input)
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
     try {
-      const { data, error } = InputSchema.safeParse(input)
-
-      if (error) {
-        throw new Error(error.message)
-      }
-
       const { storage_method, strategy_id, method_options } = data
 
       switch (storage_method) {
@@ -53,16 +59,16 @@ export const storeStrategyValues: TaskConfig<'store-strategy-values'> = {
         default:
           break
       }
-
-      await payload.jobs.queue({
-        task: 'store-strategy-values',
-        input: data,
-      })
-
-      return { output: {} }
     } catch (err) {
       payload.logger.error(err)
-      return { output: {} }
     }
+
+    await payload.jobs.queue({
+      task: 'store-strategy-values',
+      queue: data.frequency,
+      input,
+    })
+
+    return { output: {} }
   },
 }

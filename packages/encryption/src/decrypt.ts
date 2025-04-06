@@ -1,5 +1,5 @@
 import { createDecipheriv, createHash } from "node:crypto";
-import type { EncryptedData } from "@/types";
+import type { EncryptedData } from "./types";
 import { encryptionEnv } from "@repo/env";
 
 export function decryptValue(encryptedData: EncryptedData): string {

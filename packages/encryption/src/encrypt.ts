@@ -1,6 +1,6 @@
 import { createCipheriv, randomBytes, createHash } from "node:crypto";
 import { encryptionEnv } from "@repo/env";
-import type { EncryptedData } from "@/types";
+import type { EncryptedData } from "./types";
 
 export const encryptValue = (value?: string): EncryptedData => {
   if (!value) {

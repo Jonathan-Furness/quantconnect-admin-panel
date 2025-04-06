@@ -87,11 +87,36 @@ export default buildConfig({
   },
   sharp,
   onInit: async (payload) => {
-    await payload.jobs.queue({
-      task: 'queue-account-value-tasks',
-      input: {
-        frequency: 'daily',
-      },
-    })
+    const frequencies = ['daily', 'weekly', 'monthly']
+
+    for (let i = 0; i < frequencies.length; i++) {
+      const frequency = frequencies[i] as string
+      const queue = `queue-${frequency}`
+
+      const existingQueue = await payload.find({
+        collection: 'payload-jobs',
+        where: {
+          queue: {
+            equals: queue,
+          },
+          taskSlug: {
+            equals: 'queue-account-value-tasks',
+          },
+          hasError: {
+            equals: false,
+          },
+        },
+      })
+
+      if (existingQueue.totalDocs === 0) {
+        await payload.jobs.queue({
+          task: 'queue-account-value-tasks',
+          queue,
+          input: {
+            frequency,
+          },
+        })
+      }
+    }
   },
 })
