@@ -65,7 +65,11 @@ export const getInteractiveBrokersReferenceCode = async (
 
 export const getInteractiveBrokersFlexQueryReport = async (
   reference_code: string,
-): Promise<any> => {
+): Promise<{
+  date: string
+  net_liquidation_value: number
+  net_cash_movement: number
+}> => {
   const IB_API_KEY = env.IB_API_KEY
   const GET_REPORT_URL = `${IB_FLEX_SERVICE_URL}/GetStatement?t=${IB_API_KEY}&q=${reference_code}&v=3`
   const response = await fetch(GET_REPORT_URL)
@@ -89,10 +93,10 @@ export const getInteractiveBrokersFlexQueryReport = async (
   )
 
   const dateStr = FlexQueryResponse?.FlexStatements?.FlexStatement?.['@_toDate']
-  const year = parseInt(dateStr?.substring(0, 4), 10)
-  const month = parseInt(dateStr.substring(4, 6), 10) - 1
-  const day = parseInt(dateStr.substring(6, 8), 10)
-  const date = new Date(year, month, day)
+  const year = dateStr.substring(0, 4)
+  const month = dateStr.substring(4, 6)
+  const day = dateStr.substring(6, 8)
+  const date = `${year}-${month}-${day}`
 
   return {
     date,

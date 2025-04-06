@@ -13,7 +13,6 @@ export const validateEnvs = () => {
       console.error(err)
       throw err
     })
-
   jiti
     .import('./client')
     .then((_) => console.log('ENV (client) - Validated'))

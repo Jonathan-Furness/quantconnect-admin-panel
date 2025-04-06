@@ -90,6 +90,7 @@ export const Strategies: CollectionConfig = {
                       type: 'join',
                       collection: 'strategy-values',
                       on: 'strategy',
+                      defaultSort: '-date',
                     },
                   ],
                 },
