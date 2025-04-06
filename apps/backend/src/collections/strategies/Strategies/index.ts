@@ -26,6 +26,7 @@ export const Strategies: CollectionConfig = {
           label: 'Project ID',
           type: 'text',
           required: true,
+          unique: true,
           admin: {
             width: '50%',
             description: 'This is the Project ID for the strategy in QuantConnect.',
@@ -76,18 +77,35 @@ export const Strategies: CollectionConfig = {
       tabs: [
         {
           label: 'Strategy Values',
+          name: 'strategy_values',
           fields: [
             {
-              label: 'Strategy Values',
-              name: 'strategy_values',
-              type: 'join',
-              collection: 'strategy-values',
-              on: 'strategy',
-              defaultLimit: 10,
-              defaultSort: '-date',
-              admin: {
-                allowCreate: true,
-              },
+              type: 'tabs',
+              tabs: [
+                {
+                  label: 'Values',
+                  fields: [
+                    {
+                      name: 'values',
+                      type: 'join',
+                      collection: 'strategy-values',
+                      on: 'strategy',
+                      defaultSort: '-date',
+                    },
+                  ],
+                },
+                {
+                  label: 'Options',
+                  fields: [
+                    {
+                      name: 'options',
+                      type: 'join',
+                      collection: 'strategy-storage-methods',
+                      on: 'strategy',
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
