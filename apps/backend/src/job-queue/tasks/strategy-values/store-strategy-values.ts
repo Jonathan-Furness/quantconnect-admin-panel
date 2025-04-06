@@ -49,10 +49,17 @@ export const storeStrategyValues: TaskConfig<'store-strategy-values'> = {
             strategy_id,
             flex_query_id: method_options.flex_query_id,
           })
-          return { output: {} }
+          break
         default:
-          return { output: {} }
+          break
       }
+
+      await payload.jobs.queue({
+        task: 'store-strategy-values',
+        input: data,
+      })
+
+      return { output: {} }
     } catch (err) {
       payload.logger.error(err)
       return { output: {} }

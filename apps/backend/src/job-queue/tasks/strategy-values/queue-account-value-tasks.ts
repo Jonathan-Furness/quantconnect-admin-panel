@@ -50,8 +50,6 @@ export const queueAccountValueTasks: TaskConfig<'queue-account-value-tasks'> = {
           method_options: method as any,
         }
 
-        payload.logger.info(input)
-
         await payload.jobs.queue({
           task: 'store-strategy-values',
           queue: frequency,

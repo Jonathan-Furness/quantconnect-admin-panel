@@ -86,4 +86,12 @@ export default buildConfig({
     },
   },
   sharp,
+  onInit: async (payload) => {
+    await payload.jobs.queue({
+      task: 'queue-account-value-tasks',
+      input: {
+        frequency: 'daily',
+      },
+    })
+  },
 })
