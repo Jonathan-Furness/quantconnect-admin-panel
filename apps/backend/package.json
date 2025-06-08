@@ -25,9 +25,9 @@
     "@payloadcms/ui": "^3.28.1",
     "@repo/encryption": "workspace:^",
     "@repo/env": "workspace:^",
-    "@repo/strategy-values": "workspace:^",
     "@t3-oss/env-nextjs": "^0.12.0",
     "cross-env": "^7.0.3",
+    "decimal.js": "^10.5.0",
     "fast-xml-parser": "^5.2.0",
     "graphql": "^16.8.1",
     "jiti": "^2.4.2",
@@ -36,6 +36,7 @@
     "postcss": "^8.5.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "recharts": "^2.15.3",
     "sharp": "0.33.5",
     "zod": "^3.23.8"
   },
