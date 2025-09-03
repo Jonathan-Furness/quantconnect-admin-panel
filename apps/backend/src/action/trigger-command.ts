@@ -3,10 +3,12 @@ import { env } from '@/env/server'
 import crypto from 'crypto'
 import { z } from 'zod'
 
-const formDataSchema = z.object({
-  projectId: z.string({ message: 'Project ID is required' }),
-  $type: z.string({ message: 'Command $type is required' }),
-})
+const formDataSchema = z
+  .object({
+    projectId: z.string({ message: 'Project ID is required' }),
+    $type: z.string({ message: 'Command $type is required' }),
+  })
+  .passthrough()
 
 const createHeaders = () => {
   const API_TOKEN = env.QC_API_TOKEN
@@ -32,7 +34,7 @@ export const triggerCommand = async (formData: FormData) => {
   const BASE_URL = 'https://www.quantconnect.com/api/v2'
   const headers = createHeaders()
 
-  const { data, error } = await formDataSchema.safeParse(Object.fromEntries(formData))
+  const { data, error } = formDataSchema.safeParse(Object.fromEntries(formData))
 
   if (error) {
     console.error(error)
