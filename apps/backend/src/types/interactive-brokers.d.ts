@@ -47,6 +47,23 @@ export interface FlexQueryReport {
             '@_internaltransfersytd': string
           }
         }
+        CashTransactions: {
+          CashTransaction: {
+            '@_currency': string
+            '@_amount': string
+          }
+        }
+        Transfers: {
+          Transfer: {
+            '@_positionAmountInBase': string
+            '@_cashTransfer': string
+            '@_quantity': string
+            '@_transferPrice': string
+            '@_positionAmount': string
+            '@_currency': string
+            '@_fxRateToBase': string
+          }
+        }
       }
     }
   }

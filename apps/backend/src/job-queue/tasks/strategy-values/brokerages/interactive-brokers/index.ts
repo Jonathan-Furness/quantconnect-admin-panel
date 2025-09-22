@@ -92,6 +92,10 @@ export const getInteractiveBrokersFlexQueryReport = async (
     ] || 0,
   )
 
+  const cashTransfers = Number(
+    FlexQueryResponse?.FlexStatements?.FlexStatement?.Transfers?.Transfer?.['@_cashTransfer'] || 0,
+  )
+
   const dateStr = FlexQueryResponse?.FlexStatements?.FlexStatement?.['@_toDate']
   const year = dateStr.substring(0, 4)
   const month = dateStr.substring(4, 6)
@@ -101,6 +105,6 @@ export const getInteractiveBrokersFlexQueryReport = async (
   return {
     date,
     net_liquidation_value: netLiquidationValue,
-    net_cash_movement: accountTransfers + cashMovements,
+    net_cash_movement: accountTransfers + cashMovements + cashTransfers,
   }
 }
